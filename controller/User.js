@@ -6,7 +6,7 @@ const jsonResponse = require('../helper/responseHandler');
 const UserController = {
   async updateUser(req, res) {
     try {
-      let { password } = req.body;
+      let { password, username, email, permissions } = req.body;
       let { userId } = req.params;
       let user = await User.findById(userId);
       let hash;
@@ -16,8 +16,12 @@ const UserController = {
           const salt = await bcrypt.genSalt(10);
           hash = await bcrypt.hash(password, salt);
           password = hash;
+        } else {
+          password = user.password;
         }
-        await User.findOneAndUpdate({ _id: userId }, { $set: req.body });
+        let body = { username, email, password, permissions };
+
+        await User.findOneAndUpdate({ _id: userId }, { $set: body });
         const data = {
           user: {
             id: user._id,
