@@ -8,6 +8,9 @@ const router = require('./routes');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Server Connected' });
+});
 app.use(
   bodyParser.urlencoded({
     extended: true,
