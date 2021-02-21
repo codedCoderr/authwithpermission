@@ -6,9 +6,7 @@ require('dotenv').config();
 const router = require('./routes');
 
 const app = express();
-app.get('/', (req, res) => {
-  res.send('hello');
-});
+
 app.use(
   bodyParser.urlencoded({
     extended: true,
